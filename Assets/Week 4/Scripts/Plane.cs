@@ -7,7 +7,7 @@ public class Plane : MonoBehaviour
 {
     public float newPositionThreshold = 0.2f;
     public float pointArrivalThreshold = 0.05f;
-    public Vector2 currentPosition;
+    public float destructionDistance = 0.25f;
 
     public Sprite[] sprites;
     public AnimationCurve landing;
@@ -15,6 +15,7 @@ public class Plane : MonoBehaviour
 
     private float speed;
     private float landingTimer;
+    private Vector2 currentPosition;
     private Vector2 lastPosition;
 
     private SpriteRenderer spriteRenderer;
@@ -96,6 +97,26 @@ public class Plane : MonoBehaviour
             lineRenderer.SetPosition(lineRenderer.positionCount - 1, newPosition);
             lastPosition = newPosition;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        spriteRenderer.color = Color.red;
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        Vector3 otherPlane = collision.gameObject.transform.position;
+        if(Vector3.Distance(otherPlane, transform.position) < destructionDistance)
+        {
+            Destroy(collision.gameObject);
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        spriteRenderer.color = Color.white;
     }
 
     private void OnBecameInvisible()
