@@ -5,27 +5,36 @@ using UnityEngine;
 
 public class Plane : MonoBehaviour
 {
-    public float speed;
     public float newPositionThreshold = 0.2f;
     public float pointArrivalThreshold = 0.05f;
     public Vector2 currentPosition;
 
+    public Sprite[] sprites;
     public AnimationCurve landing;
     public List<Vector2> points;
 
+    private float speed;
     private float landingTimer;
     private Vector2 lastPosition;
 
+    private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb2d;
     private LineRenderer lineRenderer;
 
     private void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
         rb2d = GetComponent<Rigidbody2D>();
 
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 1;
         lineRenderer.SetPosition(0, transform.position);
+
+        transform.position = new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), 0);
+        transform.rotation = Quaternion.Euler(0, 0, Random.Range(-180f, 180f));
+        speed = Random.Range(1f, 3f);
+        spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length - 1)];
     }
 
     private void Update()
@@ -52,6 +61,7 @@ public class Plane : MonoBehaviour
                 {
                     lineRenderer.SetPosition(i, lineRenderer.GetPosition(i + 1));
                 }
+                lineRenderer.positionCount--;
             }
         }
     }
@@ -86,5 +96,10 @@ public class Plane : MonoBehaviour
             lineRenderer.SetPosition(lineRenderer.positionCount - 1, newPosition);
             lastPosition = newPosition;
         }
+    }
+
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 }
