@@ -9,6 +9,8 @@ public class Plane : MonoBehaviour
     public float pointArrivalThreshold = 0.05f;
     public float destructionDistance = 0.25f;
 
+    public bool overRunway = false;
+
     public Sprite[] sprites;
     public AnimationCurve landing;
     public List<Vector2> points;
@@ -40,7 +42,7 @@ public class Plane : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKey(KeyCode.Space))
+        if(overRunway)
         {
             landingTimer += 0.5f * Time.deltaTime;
             float interpolation = landing.Evaluate(landingTimer);
@@ -101,16 +103,22 @@ public class Plane : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        spriteRenderer.color = Color.red;
+        if(collision.GetComponent<Plane>() != null)
+        {
+            spriteRenderer.color = Color.red;
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Vector3 otherPlane = collision.gameObject.transform.position;
-        if(Vector3.Distance(otherPlane, transform.position) < destructionDistance)
+        if(collision.GetComponent<Plane>() != null)
         {
-            Destroy(collision.gameObject);
-            Destroy(gameObject);
+            Vector3 otherPlane = collision.transform.position;
+            if(Vector3.Distance(otherPlane, transform.position) < destructionDistance)
+            {
+                Destroy(collision.gameObject);
+                Destroy(gameObject);
+            }
         }
     }
 
