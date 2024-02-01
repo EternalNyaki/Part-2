@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Plane : MonoBehaviour
@@ -9,8 +10,10 @@ public class Plane : MonoBehaviour
     public float pointArrivalThreshold = 0.05f;
     public Vector2 currentPosition;
 
+    public AnimationCurve landing;
     public List<Vector2> points;
 
+    private float landingTimer;
     private Vector2 lastPosition;
 
     private Rigidbody2D rb2d;
@@ -27,6 +30,17 @@ public class Plane : MonoBehaviour
 
     private void Update()
     {
+        if(Input.GetKey(KeyCode.Space))
+        {
+            landingTimer += 0.5f * Time.deltaTime;
+            float interpolation = landing.Evaluate(landingTimer);
+            if(transform.localScale.x < 0.1f)
+            {
+                Destroy(gameObject);
+            }
+            transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, interpolation);
+        }
+
         lineRenderer.SetPosition(0, transform.position);
         if(points.Count > 0)
         {
