@@ -8,8 +8,6 @@ public class Knight : MonoBehaviour
     public float health;
     public float maxHealth = 5f;
 
-    public HealthBar healthBar;
-
     private Vector2 destination;
     private Vector2 movement;
     private bool clickingOnSelf = false;
@@ -52,7 +50,7 @@ public class Knight : MonoBehaviour
     private void OnMouseDown()
     {
         clickingOnSelf = true;
-        TakeDamage(1f);
+        SendMessage("TakeDamage", 1f);
     }
 
     private void OnMouseUp()
@@ -74,7 +72,5 @@ public class Knight : MonoBehaviour
             isDead = false;
             animator.SetTrigger("Take Damage");
         }
-        
-        healthBar.TakeDamage(damage);
     }
 }
