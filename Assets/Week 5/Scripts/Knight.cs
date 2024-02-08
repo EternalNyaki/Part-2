@@ -8,9 +8,12 @@ public class Knight : MonoBehaviour
     public float health;
     public float maxHealth = 5f;
 
+    public HealthBar healthBar;
+
     private Vector2 destination;
     private Vector2 movement;
     private bool clickingOnSelf = false;
+    private bool isDead = false;
 
     private Animator animator;
     private Rigidbody2D rb2d;
@@ -26,6 +29,8 @@ public class Knight : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(isDead) return;
+
         movement = (destination - (Vector2)transform.position).magnitude > 0.1 ? destination - (Vector2)transform.position : Vector2.zero;
         
         rb2d.MovePosition(rb2d.position + movement.normalized * speed * Time.deltaTime);
@@ -34,6 +39,8 @@ public class Knight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(isDead) return;
+
         if(Input.GetMouseButtonDown(0) && !clickingOnSelf)
         {
             destination = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -59,11 +66,15 @@ public class Knight : MonoBehaviour
         health = Mathf.Clamp(health, 0, maxHealth);
         if(health == 0)
         {
+            isDead = true;
             animator.SetTrigger("Dead");
         }
         else
         {
+            isDead = false;
             animator.SetTrigger("Take Damage");
         }
+        
+        healthBar.TakeDamage(damage);
     }
 }
