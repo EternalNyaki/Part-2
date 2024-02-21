@@ -41,6 +41,15 @@ public class Warrior : MonoBehaviour
             Attack();
         }
 
+        if(movement.x > 0 && transform.rotation.eulerAngles.y != 0)
+        {
+            transform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if(movement.x < 0 && transform.rotation.eulerAngles.y != 180)
+        {
+            transform.localRotation = Quaternion.Euler(0, 180, 0);
+        }
+
         animator.SetFloat("Movement", movement.magnitude);
     }
 
@@ -59,6 +68,6 @@ public class Warrior : MonoBehaviour
     public void Die()
     {
         //The next scene will be loaded through the death animation in the animator when it ends
-        animator.SetTrigger("Die");
+        animator.SetTrigger("Dead");
     }
 }
