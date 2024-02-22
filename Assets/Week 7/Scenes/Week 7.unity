@@ -4484,6 +4484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guardDistance: 2
+  speed: 0.002
   goalkeeper: {fileID: 2572246266077659201}
 --- !u!4 &2081585888
 Transform:
