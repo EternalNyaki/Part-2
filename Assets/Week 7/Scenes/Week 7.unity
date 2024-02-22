@@ -3782,7 +3782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e0e12321eed59543aca8041f13be6de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kickOffSpot: {fileID: 0}
+  kickOffSpot: {fileID: 1079000001}
 --- !u!1001 &954667581
 PrefabInstance:
   m_ObjectHideFlags: 0
