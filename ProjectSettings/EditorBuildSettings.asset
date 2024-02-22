@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Assignment/Scenes/Main Scene.unity
     guid: a0c4b90b4ceeb504bac431848144ffa5
+  - enabled: 1
+    path: Assets/Assignment/Scenes/Start Menu.unity
+    guid: f048aecd2b697694792d8f3fc3be9d94
+  - enabled: 1
+    path: Assets/Assignment/Scenes/Game Over.unity
+    guid: 51de61f9786228544bde57cf10b371be
   m_configObjects: {}
