@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Controller : MonoBehaviour
 {
     public float maxCharge = 1f;
 
     public Slider chargeSlider;
+    public TextMeshProUGUI scoreText;
+
+    public static int score = 0;
     
     public static Footballer selectedPlayer { get; private set; }
 
@@ -54,5 +58,7 @@ public class Controller : MonoBehaviour
         {
             direction = ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)selectedPlayer.transform.position).normalized * charge;
         }
+
+        scoreText.text = "Score: " + score;
     }
 }
