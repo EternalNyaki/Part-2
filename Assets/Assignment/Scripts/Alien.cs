@@ -18,6 +18,8 @@ public class Alien : MonoBehaviour
         timer = lifespan;
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Warrior>();
+
+        transform.position = new Vector3(Random.Range(-8f, 8f), Random.Range(-5f, 5f), 0);
     }
 
     // Update is called once per frame
@@ -38,7 +40,8 @@ public class Alien : MonoBehaviour
 
     public void GetHit()
     {
-        //Increase score
+        gameObject.GetComponentInParent<AlienSpawner>().IncreaseScore();
+
         Destroy(gameObject);
     }
 }
